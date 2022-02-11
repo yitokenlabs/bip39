@@ -16,8 +16,8 @@ import 'spanish.dart' as spanish;
 const String DEFAULT_LANGUAGE = "en";
 
 const Map<String, List<String>> WORDLIST_MAP = {
-  'zh-hans': chinese_simplified.WORDLIST,
-  'zh-hant': chinese_traditional.WORDLIST,
+  'zh-Hans': chinese_simplified.WORDLIST,
+  'zh-Hant': chinese_traditional.WORDLIST,
   'cs': czech.WORDLIST,
   'en': english.WORDLIST,
   'fr': french.WORDLIST,

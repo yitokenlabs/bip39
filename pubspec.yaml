@@ -1,4 +1,4 @@
-name: bip39
+name: bip39_l10n
 description: Dart implementation of Bitcoin BIP39 Mnemonic code for generating deterministic keys
 version: 1.0.6
 homepage: https://github.com/anicdh/bip39

@@ -2,27 +2,29 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:bip39/bip39.dart' as bip39;
+import 'package:bip39_l10n/bip39.dart' as bip39;
+import '../lib/src/wordlists/chinese_simplified.dart' as chinese_simplified;
+import '../lib/src/wordlists/english.dart' as english;
 import 'package:hex/hex.dart';
 import 'package:test/test.dart';
 
 
 void main() {
-  final languages = [
-    'zh-hans',
-    'zh-hant',
-    'cs',
-    'en',
-    'fr',
-    'it',
-    'ja',
-    'ko',
-    'pt',
-    'es',
-  ];
+  final languages = bip39.WORDLIST_MAP.keys.toList();
   for (var language in languages) {
     testMnemonic(language);
   }
+
+  convert();
+}
+
+void convert() {
+  final mnemonic = 'jealous cruise bench powder junk movie mobile matter maid boat hedgehog eternal';
+  final zhMnemonic = bip39.convertTo(mnemonic, 'en', 'zh-Hans');
+  print('zhMnemonic: $zhMnemonic');
+  print('entropy(en): ${bip39.mnemonicToEntropy(mnemonic)}');
+  print('entropy(zh): ${bip39.mnemonicToEntropy(zhMnemonic, language: 'zh-Hans')}');
+
 }
 
 void testMnemonic(String language) {

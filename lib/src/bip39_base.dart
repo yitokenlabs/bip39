@@ -11,6 +11,7 @@ const int _SIZE_BYTE = 255;
 const _INVALID_MNEMONIC = 'Invalid mnemonic';
 const _INVALID_ENTROPY = 'Invalid entropy';
 const _INVALID_CHECKSUM = 'Invalid mnemonic checksum';
+const _INVALID_LANGUAGE = 'Invalid language';
 
 typedef Uint8List RandomBytes(int size);
 
@@ -145,6 +146,32 @@ String mnemonicToEntropy(mnemonic, {String language = DEFAULT_LANGUAGE}) {
     return byte.toRadixString(16).padLeft(2, '0');
   }).join('');
 }
+
+String convertTo(String mnemonic, String fromLanguage, String toLanguage) {
+  if (!WORDLIST_MAP.containsKey(fromLanguage)
+      || !WORDLIST_MAP.containsKey(toLanguage)) {
+    throw new ArgumentError(_INVALID_LANGUAGE);
+  }
+  if (!validateMnemonic(mnemonic, language: fromLanguage)) {
+    throw new ArgumentError(_INVALID_MNEMONIC);
+  }
+
+  List<String> fromWordList = getWordList(language: fromLanguage);
+  List<String> toWordList = getWordList(language: toLanguage);
+  List<String> list = [];
+  var words = mnemonic.split(' ');
+  for (var word in words) {
+    int index = fromWordList.indexOf(word);
+    if (index < 0) {
+      throw new ArgumentError(_INVALID_MNEMONIC);
+    }
+
+    list.add(toWordList[index]);
+  }
+
+  return list.join(' ');
+}
+
 // List<String>> _loadWordList() {
 //   final res = new Resource('package:bip39/src/wordlists/english.json').readAsString();
 //   List<String> words = (json.decode(res) as List).map((e) => e.toString()).toList();
